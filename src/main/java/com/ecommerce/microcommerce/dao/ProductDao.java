@@ -21,4 +21,6 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
     List<Product>  chercherUnProduitCher(@Param("prixLimit") int prix);
 
     List<Product> findAll();
+
+    List<Product> findAllByOrderByNom();
 }

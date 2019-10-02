@@ -116,5 +116,13 @@ public class ProductController {
         return ListeProducts;
     }
 
+    //Récupère liste produits dans l'ordre alphabétique
+    @GetMapping(value = "/ProduitsAlphabetique")
+    public List<Product> trierProduitsParOrdreAlphabetique(){
+        List<Product> listDBAaZ = productDao.findAllByOrderByNom();
+
+        return listDBAaZ;
+    }
+
 
 }
