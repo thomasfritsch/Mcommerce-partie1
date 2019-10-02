@@ -16,10 +16,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 
-@Api( description="API pour es opérations CRUD sur les produits.")
+@Api("API pour es opérations CRUD sur les produits.")
 
 @RestController
 public class ProductController {
@@ -86,7 +87,7 @@ public class ProductController {
     @DeleteMapping (value = "/Produits/{id}")
     public void supprimerProduit(@PathVariable int id) {
 
-        productDao.delete(id);
+        productDao.deleteById(id);
     }
 
     @PutMapping (value = "/Produits")
@@ -103,6 +104,17 @@ public class ProductController {
         return productDao.chercherUnProduitCher(400);
     }
 
+    //Récuppère la liste des marges entre le prix d'achat et le prix de vente
+    @GetMapping(value = "/AdminProduits")
+    public HashMap<Product, Integer> calculerMargeProduit(){
+        List<Product> productsDB = productDao.findAll();
+        HashMap<Product,Integer> ListeProducts = new HashMap<>();
+        for (Product produit : productsDB) {
+            int marge = produit.getPrix() - produit.getPrixAchat();
+            ListeProducts.put(produit, marge);
+        }
+        return ListeProducts;
+    }
 
 
 }
